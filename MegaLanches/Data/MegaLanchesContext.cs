@@ -1,0 +1,17 @@
+using MegaLanches.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace MegaLanches.Data
+{
+    public class MegaLanchesContext : DbContext
+    {
+        public MegaLanchesContext(DbContextOptions<MegaLanchesContext> options) : base(options)
+        {
+        }
+
+        // Tabelas
+        public DbSet<Lanche> Lanches { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
+        
+    }
+}
