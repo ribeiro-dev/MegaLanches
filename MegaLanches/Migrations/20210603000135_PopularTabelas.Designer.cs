@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaLanches.Migrations
 {
     [DbContext(typeof(MegaLanchesContext))]
-    [Migration("20210602011515_PopularTabelas")]
+    [Migration("20210603000135_PopularTabelas")]
     partial class PopularTabelas
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
