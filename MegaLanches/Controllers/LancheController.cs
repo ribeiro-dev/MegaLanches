@@ -1,4 +1,5 @@
 using MegaLanches.Repositories;
+using MegaLanches.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MegaLanches.Controllers
@@ -18,8 +19,13 @@ namespace MegaLanches.Controllers
         {
             ViewBag.Lanche = "Lanches";
             ViewData["Categoria"] = "Categoria";
-            var lanches = _lancheRepository.Lanches;
-            return View(lanches);
+            //var lanches = _lancheRepository.Lanches;
+            //return View(lanches);
+
+            var lanchesListViewModel = new LancheListViewModel();
+            lanchesListViewModel.Lanches = _lancheRepository.Lanches;
+            lanchesListViewModel.CategoriaAtual = "Categoria Atual";
+            return View(lanchesListViewModel);
         }
     }
 }
