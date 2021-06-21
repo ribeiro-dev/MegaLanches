@@ -6,32 +6,28 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MegaLanches.Models;
+using MegaLanches.Repositories;
+using MegaLanches.ViewModels;
 
 namespace MegaLanches.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILancheRepository _lancheRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILancheRepository lancheRepository)
         {
-            _logger = logger;
+            _lancheRepository = lancheRepository;
         }
 
         public IActionResult Index()
         {
-            return View();
-        }
+            var homeViewModel = new HomeViewModel
+            {
+                LanchesPreferidos = _lancheRepository.LanchesPreferidos
+            };
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(homeViewModel);
         }
     }
 }
