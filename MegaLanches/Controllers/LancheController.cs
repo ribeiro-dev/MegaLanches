@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using MegaLanches.Models;
 using MegaLanches.Repositories;
 using MegaLanches.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -15,16 +19,41 @@ namespace MegaLanches.Controllers
             _categoriaRepository = categoriaRepository;
         }
 
-        public IActionResult List()
+        public IActionResult List(string categoria)
         {
-            ViewBag.Lanche = "Lanches";
-            ViewData["Categoria"] = "Categoria";
-            //var lanches = _lancheRepository.Lanches;
-            //return View(lanches);
+            string _categoria = categoria;
+            IEnumerable<Lanche> lanches;
+            string categoriaAtual = string.Empty;
 
-            var lanchesListViewModel = new LancheListViewModel();
-            lanchesListViewModel.Lanches = _lancheRepository.Lanches;
-            lanchesListViewModel.CategoriaAtual = "Categoria Atual";
+            if (string.IsNullOrEmpty(categoria))
+            {
+                lanches = _lancheRepository.Lanches.OrderBy(l => l.LancheId);
+                categoria = "Todos os lanches";
+            }
+            else
+            {
+                if (string.Equals("Normal", _categoria, StringComparison.OrdinalIgnoreCase))
+                {
+                    lanches = _lancheRepository.Lanches
+                    .Where(l => l.Categoria.CategoriaNome.Equals("Normal"))
+                    .OrderBy(l => l.Nome);
+                }
+                else
+                {
+                    lanches = _lancheRepository.Lanches
+                    .Where(l => l.Categoria.CategoriaNome.Equals("Natural"))
+                    .OrderBy(l => l.Nome);
+                }
+
+                categoriaAtual = _categoria;
+            }
+
+            var lanchesListViewModel = new LancheListViewModel 
+            {
+                Lanches = lanches,
+                CategoriaAtual = categoriaAtual
+            };
+
             return View(lanchesListViewModel);
         }
     }
