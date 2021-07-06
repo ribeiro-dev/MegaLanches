@@ -48,7 +48,7 @@ namespace MegaLanches.Controllers
                 categoriaAtual = _categoria;
             }
 
-            var lanchesListViewModel = new LancheListViewModel 
+            var lanchesListViewModel = new LancheListViewModel
             {
                 Lanches = lanches,
                 CategoriaAtual = categoriaAtual
@@ -66,6 +66,25 @@ namespace MegaLanches.Controllers
             }
 
             return View(lanche);
+        }
+
+        public IActionResult Search(string searchString)
+        {
+            string _searchString = searchString;
+            IEnumerable<Lanche> lanches;
+            string _categoriaAtual = string.Empty;
+
+            if (string.IsNullOrEmpty(_searchString))
+            {
+                lanches = _lancheRepository.Lanches.OrderBy(l => l.LancheId);
+            }
+            else
+            {
+                lanches = _lancheRepository.Lanches.Where(l => l.Nome.ToLower().Contains(_searchString.ToLower()));
+            }
+
+            // retorna uma View específica e o model
+            return View("~/Views/Lanche/List.cshtml", new LancheListViewModel { Lanches = lanches, CategoriaAtual = "Todos os lanches"});
         }
     }
 }
