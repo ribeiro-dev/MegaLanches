@@ -28,7 +28,7 @@ namespace MegaLanches.Models
         public string Endereco1 { get; set; }
 
         [Required(ErrorMessage = "Informe o complemento do endereço")]
-        [Display(Name = "COmplemento")]
+        [Display(Name = "Complemento")]
         [StringLength(100)]
         public string Endereco2 { get; set; }
 

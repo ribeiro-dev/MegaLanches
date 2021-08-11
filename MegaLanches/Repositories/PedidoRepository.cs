@@ -25,11 +25,11 @@ namespace MegaLanches.Repositories
             _context.Pedidos.Add(pedido); // adiciona o pedido no context
             _context.SaveChanges(); // salva o banco para nao ter problemas de chave depois
 
-            var carrinhoCompraItens = _context.CarrinhoCompraItens; // obtém os itens do carrinho
+            var carrinhoCompraItens = _carrinhoCompra.CarrinhoCompraItens; // obtém os itens do carrinho
 
             foreach (var carrinhoItem in carrinhoCompraItens) // loop nos itens do carrinho
             {
-                var pedidoDetalhe = new PedidoDetalhe() { 
+                var pedidoDetalhe = new PedidoDetalhe { 
                     Quantidade = carrinhoItem.Quantidade,
                     LancheId = carrinhoItem.Lanche.LancheId,
                     PedidoId = pedido.PedidoId,
