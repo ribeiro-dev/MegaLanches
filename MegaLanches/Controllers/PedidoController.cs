@@ -38,8 +38,13 @@ namespace MegaLanches.Controllers
             if (ModelState.IsValid)
             {
                 _pedidoRepository.CriarPedido(pedido);
+
+                // persiste as informações do pedido pra utilizar na action CheckoutCompleto
+                ViewBag.CheckoutCompletoMensagem = "Obrigado pelo seu pedido!";
+                ViewBag.TotalPedido = _carrinhoCompra.GetCarrinhoCompraTotal();
+                
                 _carrinhoCompra.LimparCarrinho(); // limpa o carrinho após o pedido ser realizado
-                return RedirectToAction("CheckoutCompleto");
+                return View("~/Views/Pedido/CheckoutCompleto.cshtml", pedido);
             }
 
             return View(pedido);
@@ -47,6 +52,10 @@ namespace MegaLanches.Controllers
 
         public IActionResult CheckoutCompleto()
         {
+            ViewBag.Cliente = TempData["Cliente"];
+            ViewBag.DataPedido = TempData["DataPedido"];
+            ViewBag.NumeroPedido = TempData["NumeroPedido"];
+            ViewBag.TotalPedido = TempData["TotalPedido"];
             ViewBag.CheckoutCompletoMensagem = "Obrigado pelo seu pedido!";
             return View();
         }
