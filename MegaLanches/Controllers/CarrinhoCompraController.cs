@@ -2,6 +2,7 @@ using System.Linq;
 using MegaLanches.Models;
 using MegaLanches.Repositories;
 using MegaLanches.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MegaLanches.Controllers
@@ -31,6 +32,7 @@ namespace MegaLanches.Controllers
             return View(carrinhoCompraViewModel);
         }
 
+        [Authorize]
         public RedirectToActionResult AdicionarItemNoCarrinhoCompra(int lancheId)
         {
             var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(p => p.LancheId == lancheId);
@@ -42,6 +44,7 @@ namespace MegaLanches.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult RemoverItemDoCarrinhoCompra(int lancheId)
         {
             var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(p => p.LancheId == lancheId);

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +33,10 @@ namespace MegaLanches
 
             services.AddDbContext<MegaLanchesContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("MegaLanchesContext")));
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<MegaLanchesContext>()
+                .AddDefaultTokenProviders();
 
             services.AddTransient<ICategoriaRepository, CategoriaRepository>();
             services.AddTransient<ILancheRepository, LancheRepository>();
@@ -60,6 +65,7 @@ namespace MegaLanches
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
+            app.UseAuthentication();
 
             app.UseRouting();
 

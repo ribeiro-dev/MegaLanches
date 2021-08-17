@@ -4,6 +4,7 @@ using System.Linq;
 using MegaLanches.Models;
 using MegaLanches.Repositories;
 using MegaLanches.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MegaLanches.Controllers
@@ -19,12 +20,14 @@ namespace MegaLanches.Controllers
             _carrinhoCompra = carrinhoCompra;
         }
 
+        [Authorize]
         public IActionResult Checkout()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Checkout(Pedido pedido)
         {
             var items = _carrinhoCompra.GetCarrinhoCompraItens();
