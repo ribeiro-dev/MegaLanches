@@ -7,14 +7,14 @@
 {
     <form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm" method="POST" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
-            <li><a class="nav-link text-white" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            <li><a class="nav-link text-light" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
     </form>
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a class="nav-link text-white" id="registerLink" asp-controller="Account" asp-action="Register">Registrar</a></li>
-        <li><a class="nav-link text-white" id="loginLink" asp-controller="Account" asp-action="Login">Login</a></li>
+        <li><a class="nav-link text-light" id="registerLink" asp-controller="Account" asp-action="Register">Registrar</a></li>
+        <li><a class="nav-link text-light" id="loginLink" asp-controller="Account" asp-action="Login">Login</a></li>
     </ul>
 }
