@@ -8,7 +8,7 @@ namespace MegaLanches.Models
 {
     public class Pedido
     {
-        [BindNever] // informa para o Id nao ser incluido no formulario
+        //[BindNever] // informa para o Id nao ser incluido no formulario
         public int PedidoId { get; set; }
         public List<PedidoDetalhe> PedidoItens { get; set; }
 
@@ -61,8 +61,16 @@ namespace MegaLanches.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal PedidoTotal { get; set; }
 
-        [BindNever]
-        [ScaffoldColumn(false)]
+        //[BindNever]
+        //[ScaffoldColumn(false)]
+        [Display(Name = "Data/Hora do Recebimento do Pedido")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime PedidoEnviado { get; set; }
+
+        [Display(Name = "Data/Hora da Entrega do Pedido")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
+        public DateTime? PedidoEntregueEm { get; set; } //interrogação serve para definir como nullable
     }
 }
