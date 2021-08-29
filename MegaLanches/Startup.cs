@@ -38,6 +38,9 @@ namespace MegaLanches
                 .AddEntityFrameworkStores<MegaLanchesContext>()
                 .AddDefaultTokenProviders();
 
+            // define a rota de acesso negado
+            services.ConfigureApplicationCookie(options => options.AccessDeniedPath = "/Home/AccessDenied");
+
             services.AddTransient<ICategoriaRepository, CategoriaRepository>();
             services.AddTransient<ILancheRepository, LancheRepository>();
             services.AddTransient<IPedidoRepository, PedidoRepository>();

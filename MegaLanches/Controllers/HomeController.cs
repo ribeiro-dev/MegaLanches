@@ -20,7 +20,7 @@ namespace MegaLanches.Controllers
             _lancheRepository = lancheRepository;
         }
 
-        public IActionResult Index()
+        public ViewResult Index()
         {
             var homeViewModel = new HomeViewModel
             {
@@ -28,6 +28,11 @@ namespace MegaLanches.Controllers
             };
 
             return View(homeViewModel);
+        }
+
+        public ViewResult AccessDenied()
+        {
+            return View();
         }
     }
 }
