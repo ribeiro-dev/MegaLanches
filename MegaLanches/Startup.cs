@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ReflectionIT.Mvc.Paging;
 
 namespace MegaLanches
 {
@@ -50,6 +51,13 @@ namespace MegaLanches
             services.AddScoped(cp => CarrinhoCompra.GetCarrinho(cp));
             services.AddMemoryCache();
             services.AddSession();
+
+            // configura o serviço de paginação
+            services.AddPaging(options => 
+            {
+                options.ViewName = "Bootstrap4";
+                options.PageParameterName = "pageIndex";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

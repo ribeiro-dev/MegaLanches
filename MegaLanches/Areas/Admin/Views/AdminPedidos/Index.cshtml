@@ -1,9 +1,23 @@
-﻿@model IEnumerable<MegaLanches.Models.Pedido>
+﻿@model ReflectionIT.Mvc.Paging.PagingList<MegaLanches.Models.Pedido>
 
 @{
     ViewData["Title"] = "Index";
 }
 <h3>Pedidos</h3>
+
+<form method="get" class="form-inline">
+    <input name="filter" class="form-control" placeholder="Filtro" value="@Model.RouteValue["Filter"]" />
+    <button type="submit" class="btn btn-info">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Procurar
+    </button>
+</form>
+
+<br>
+Total de pedidos: @Model.TotalRecordCount
+<div>
+    @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model }) @* cria uma paginacao*@
+</div>
+
 <p>
     <a asp-action="Create">Criar Pedido</a>
 </p>
@@ -13,7 +27,8 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Nome)
+                        @*@Html.DisplayNameFor(model => model.Nome)*@
+                        @Html.SortableHeaderFor(model => model.Nome, "Nome")
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Sobrenome)
@@ -81,6 +96,7 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.PedidoEnviado)
+                            @*String.Format("{0:dd/MM/yyyy}"), item.PedidoEnviado) para exibir data sem a hora*@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.PedidoEntregueEm)
@@ -95,4 +111,8 @@
             </tbody>
         </table>
     </div>
+</div>
+
+<div>
+    @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model }) @* cria uma paginacao*@
 </div>

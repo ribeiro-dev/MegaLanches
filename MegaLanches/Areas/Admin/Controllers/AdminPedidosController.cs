@@ -2,7 +2,9 @@
 using MegaLanches.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,9 +22,21 @@ namespace MegaLanches.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminPedidos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string filter, int pageIndex = 1, string sort = "Nome")
         {
-            return View(await _context.Pedidos.ToListAsync());
+            var resultado = _context.Pedidos.AsNoTracking()
+                            .AsQueryable(); // permite usar um .Where depois
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                resultado = resultado.Where(p => p.Nome.Contains(filter));
+            }
+
+            var model = await PagingList.CreateAsync(resultado, 5, pageIndex, sort, "Nome");
+
+            model.RouteValue = new RouteValueDictionary { { "filter", filter } };
+
+            return View(model);
         }
 
         // GET: Admin/AdminPedidos/Details/5
