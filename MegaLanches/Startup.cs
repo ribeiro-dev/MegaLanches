@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MegaLanches.Data;
 using MegaLanches.Models;
 using MegaLanches.Repositories;
+using MegaLanches.Servicos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -46,6 +47,9 @@ namespace MegaLanches
             services.AddTransient<ILancheRepository, LancheRepository>();
             services.AddTransient<IPedidoRepository, PedidoRepository>();
 
+            services.AddScoped<RelatorioVendasService>();
+
+            // fornece uma instancia de HttpContextAccessor
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped(cp => CarrinhoCompra.GetCarrinho(cp));

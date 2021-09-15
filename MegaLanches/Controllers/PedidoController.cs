@@ -30,13 +30,31 @@ namespace MegaLanches.Controllers
         [Authorize]
         public IActionResult Checkout(Pedido pedido)
         {
+            decimal precoTotalPedido = 0.0m;
+            int totalItensPedido = 0;
+
             var items = _carrinhoCompra.GetCarrinhoCompraItens();
             _carrinhoCompra.CarrinhoCompraItens = items;
 
+
+            // verifica se existem itens de pedido
             if (_carrinhoCompra.CarrinhoCompraItens.Count == 0)
             {
                 ModelState.AddModelError("", "Seu carrinho está vazio, inclua um lanche");
             }
+
+            // calcula o total do pedido
+            foreach (var item in items)
+            {
+                totalItensPedido += item.Quantidade;
+                precoTotalPedido += (item.Lanche.Preco * item.Quantidade);
+            }
+
+            // atribui o total de itens ao pedido
+            pedido.TotalItensPedido = totalItensPedido;
+            
+            // atribui o valor total do pedido
+            pedido.PedidoTotal = precoTotalPedido;
 
             if (ModelState.IsValid)
             {

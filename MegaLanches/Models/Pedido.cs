@@ -61,6 +61,11 @@ namespace MegaLanches.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal PedidoTotal { get; set; }
 
+        [BindNever]
+        [ScaffoldColumn(false)]
+        [Display(Name = "Itens no Pedido")]
+        public int TotalItensPedido { get; set; }
+
         //[BindNever]
         //[ScaffoldColumn(false)]
         [Display(Name = "Data/Hora do Recebimento do Pedido")]
